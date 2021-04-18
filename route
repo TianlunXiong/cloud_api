@@ -1,0 +1,7 @@
+请求/响应循环：
+	[中间件: 匿名(0)]
+	[中间件: cors]
+	[中间件: staticFile]
+	[路由中间件: --路由--]---->
+		[请求路径: /static/cdn/secret]-->	[控制器: CDN_Pass.secret]-->
+		[请求路径: /static/cdn/secret_staging]-->	[控制器: CDN_Pass.secret_staging]-->

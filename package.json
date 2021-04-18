@@ -1,6 +1,36 @@
 {
   "name": "xcloud_api",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=development tsnd ./app/index.ts",
+    "build:deploy": "rimraf dist && babel app --extensions .ts --out-dir dist --copy-files",
+    "deploy": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "config": "^3.3.3",
+    "cos-nodejs-sdk-v5": "^2.8.5",
+    "jsonschema": "^1.4.0",
+    "koa-body": "^4.2.0",
+    "koa-cors": "^0.0.16",
+    "koa-send": "^5.0.1",
+    "mysql": "^2.18.1",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "qcloud-cos-sts": "^3.0.3",
+    "replace-in-file": "^6.1.0",
+    "sequelize": "^6.6.2",
+    "tmp": "^0.2.1",
+    "typescript-json-schema": "^0.50.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.37",
+    "@types/jsonschema": "^1.1.1",
+    "@types/koa-send": "^4.1.2",
+    "@types/superagent": "^4.1.10",
+    "@types/uuid": "^8.3.0",
+    "@vikit/xnestjs": "^0.1.0-alpha.1",
+    "rimraf": "^3.0.2"
+  }
 }
