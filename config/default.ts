@@ -1,5 +1,10 @@
+import { join } from 'path';
+
+const PWD = process.cwd();
+
 export default {
   port: 8080,
+  apiType: join(PWD, './app/interface/api/index.ts'),
   db: {
     database: "test_1",
     username: "tainlx",

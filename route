@@ -3,5 +3,9 @@
 	[中间件: cors]
 	[中间件: staticFile]
 	[路由中间件: --路由--]---->
-		[请求路径: /static/cdn/secret]-->	[控制器: CDN_Pass.secret]-->
-		[请求路径: /static/cdn/secret_staging]-->	[控制器: CDN_Pass.secret_staging]-->
+		[请求路径: /api/v1/cos/key]-->	[控制器: CosApi.key]-->
+		[请求路径: /api/v1/widget/add]-->	[控制器: WidgetApi.add]-->
+		[请求路径: /api/v1/widget/delete]-->	[控制器: WidgetApi.delete]-->
+		[请求路径: /api/v1/widget/query]-->	[控制器: WidgetApi.query]-->
+		[请求路径: /api/v1/widget/query_commit]-->	[控制器: WidgetApi.query_commit]-->
+		[请求路径: /api/v1/widget/commit]-->	[控制器: WidgetApi.commit]-->

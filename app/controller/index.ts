@@ -1,2 +1,2 @@
-import './cdn';
-// import '../service/mycos'
+import "./cos";
+import "./widget";

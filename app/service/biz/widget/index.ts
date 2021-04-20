@@ -1,41 +1,35 @@
-import { Injectable } from '@myfe/oasis';
+import { Injectable } from '@vikit/xnestjs';
 import { Op } from 'sequelize';
-import DB, { ModelInstance } from '../../db';
+import DB from '../../db';
+import Utils from '../../utils';
 import {
-  AddComponentRequest,
-  QueryComponentRequest,
-  DeleteComponentRequest,
-} from '../../../controller/component/validator';
-import { Response } from '../../../types/response';
+  AddWidget,
+  QueryWidget,
+  DeleteWidget,
+} from '../../../interface/api/request/widget';
+
+const Response = Utils.Response;
 
 /**
- * 组件 增删改查
+ * 组件 增删改查(CRUD)
  */
 @Injectable
-class DB_Component {
+class Biz_Widget {
   constructor(private db: DB) {}
 
-  async create(params: AddComponentRequest) {
+  async create(params: AddWidget) {
     const { name } = params;
     try {
-      const Model = await this.db.getModel('component');
-      let duplicated = true;
-      try {
-        duplicated = await Model.findOne({
-          where: {
-            component_name: name,
-            is_deleted: '0',
-          },
-        });
-      } catch (e) {
-        return Response.Error(e);
-      }
+      const Model = await this.db.getModel('widget');
+      const duplicated = await Model.findOne({
+        where: {
+          name
+        },
+      });
       if (!duplicated) {
         try {
-          const p: Partial<ModelInstance['component']> = {
-            creator: 'test',
-            component_id: this.db.getUUID(),
-            component_name: name,
+          const p: AddWidget = {
+            name
           };
           await Model.create(p);
         } catch (e) {
@@ -50,15 +44,15 @@ class DB_Component {
     }
   }
 
-  async retrieve(params: QueryComponentRequest = {}, findOne: boolean = false) {
+  async retrieve(params: QueryWidget = {}, findOne: boolean = false) {
     try {
-      const Model = await this.db.getModel('component');
+      const Model = await this.db.getModel('widget');
       try {
-        const { component_id, creator, component_name } = params;
-        const andCondition: { [key: string]: any }[] = [{ is_deleted: '0' }];
-        if (component_id) andCondition.push({ component_id });
+        const { name, creator, widget_id } = params;
+        const andCondition: { [key: string]: any }[] = [];
+        if (widget_id) andCondition.push({ widget_id });
         if (creator) andCondition.push({ creator });
-        if (component_name) andCondition.push({ component_name });
+        if (name) andCondition.push({ name });
 
         const whereCondition = andCondition.length ? {
           [Op.and]: andCondition,
@@ -79,17 +73,17 @@ class DB_Component {
     }
   }
 
-  async updateReleaseId(component_id: string, releaseId: string) {
+  async updateReleaseId(widget_id: string, releaseId: string) {
     try {
-      const Model = await this.db.getModel('component');
+      const Model = await this.db.getModel('widget');
       try {
         const rsl = await Model.update(
           {
-            latest_release_id: releaseId,
+            current_commit_id: releaseId,
           },
           {
             where: {
-              component_id,
+              widget_id,
             },
           },
         );
@@ -103,15 +97,15 @@ class DB_Component {
     }
   }
 
-  async delete(params: DeleteComponentRequest) {
+  async delete(params: DeleteWidget) {
     const { name } = params;
     try {
-      const Model = await this.db.getModel('component');
-      let hasOne = false;
+      const Model = await this.db.getModel('widget');
+      let hasOne = null;
       try {
         hasOne = await Model.findOne({
           where: {
-            component_name: name,
+            name,
           },
         });
       } catch (e) {
@@ -120,10 +114,10 @@ class DB_Component {
       if (hasOne) {
         try {
           await Model.update({
-            is_deleted: '1',
+            status: '1',
           }, {
             where: {
-              component_name: name
+              name
             }
           })
         } catch (e) {
@@ -139,4 +133,4 @@ class DB_Component {
   }
 }
 
-export default DB_Component;
+export default Biz_Widget;

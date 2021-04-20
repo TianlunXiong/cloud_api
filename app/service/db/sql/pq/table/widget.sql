@@ -5,10 +5,10 @@ CREATE TABLE IF NOT EXISTS "widget"
 (
     id SERIAL UNIQUE NOT NULL,
     widget_id CHAR(36) PRIMARY KEY UNIQUE NOT NULL DEFAULT gen_random_uuid(),
-    type SMALLINT DEFAULT 0,
+    type VARCHAR(32) DEFAULT '0',
     name VARCHAR(100) UNIQUE NOT NULL,
     current_commit_id CHAR(36) DEFAULT NULL,
-    status SMALLINT DEFAULT 0,
+    status VARCHAR(32) DEFAULT '0',
     creator VARCHAR(32) DEFAULT NULL,
     create_time TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP(6) DEFAULT NULL

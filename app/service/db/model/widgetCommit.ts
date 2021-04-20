@@ -1,8 +1,27 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
-import WidgetCommitModel from '../../../interface/service/db/model/IWidgetCommit';
+import { DataTypes, Model, Sequelize } from "sequelize";
+import WidgetCommitModel from "../../../interface/service/db/model/IWidgetCommit";
+import { v4 as uuid } from 'uuid';
 
-class WidgetCommit extends Model<WidgetCommitModel> {
+class WidgetCommit
+  extends Model<
+    WidgetCommitModel,
+    Pick<
+      WidgetCommitModel,
+      "name" | "pkg_name" | "pkg_version" | "src" | "creator" | "widget_id"
+    >
+  >
+  implements WidgetCommitModel {
   static HasInited = false;
+
+  id!: string;
+  name!: string;
+  widget_id!: string;
+  commit_id!: string;
+  src!: string;
+  pkg_name!: string;
+  pkg_version!: string;
+  creator!: string;
+  create_time!: number;
 }
 
 export function init(sequelize: Sequelize) {
@@ -10,7 +29,7 @@ export function init(sequelize: Sequelize) {
     WidgetCommit.init(
       {
         id: {
-          type: DataTypes.INTEGER.UNSIGNED,
+          type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
@@ -28,10 +47,7 @@ export function init(sequelize: Sequelize) {
           type: DataTypes.STRING(36),
           unique: true,
           allowNull: false,
-        },
-        type: {
-          type: DataTypes.SMALLINT,
-          allowNull: false,
+          defaultValue: () => uuid(),
         },
         src: {
           type: DataTypes.TEXT,
@@ -50,21 +66,16 @@ export function init(sequelize: Sequelize) {
         creator: {
           type: DataTypes.STRING(32),
           allowNull: false,
-          defaultValue: ''
-        }
+          defaultValue: "test",
+        },
       },
       {
         sequelize,
-        tableName: 'component_commit',
-        timestamps: false,
-        paranoid: true,
-        createdAt: 'add_time',
-        updatedAt: 'update_time',
-      },
+        tableName: "widget_commit"
+      }
     );
     WidgetCommit.HasInited = true;
   }
 }
-
 
 export default WidgetCommit;

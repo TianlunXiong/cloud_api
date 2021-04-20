@@ -2,7 +2,7 @@ export default interface IWidgetModel {
   id: string;
   widget_id: string;
   name: string;
-  type: number;
+  type: string;
   current_commit_id: string;
   status: string;
   creator: string;

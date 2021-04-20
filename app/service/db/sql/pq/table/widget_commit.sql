@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS "widget_commit"
 (
     id SERIAL UNIQUE NOT NULL,
     name VARCHAR(100) UNIQUE NOT NULL,
-    type SMALLINT NOT NULL,
+    type VARCHAR(32) NOT NULL,
     widget_id CHAR(36) PRIMARY KEY UNIQUE NOT NULL,
     commit_id CHAR(36) UNIQUE NOT NULL DEFAULT gen_random_uuid(),
     src TEXT NOT NULL,

@@ -1,5 +1,5 @@
 import { Injectable } from "@vikit/xnestjs";
-import { ModelClass } from "./model";
+import { ModelClass, WidgetCommitModelInit, WidgetModelInit } from "./model";
 import { Sequelize } from "sequelize";
 import config from "config";
 
@@ -14,7 +14,7 @@ const {
 } = config.get("db");
 
 @Injectable
-class DB {
+export default class DB {
   static sequelize: Sequelize | null = null;
   static connecting = false;
   static async Init() {
@@ -27,11 +27,13 @@ class DB {
     });
     DB.connecting = true;
     try {
+      WidgetModelInit(sequelize);
+      WidgetCommitModelInit(sequelize);
       await sequelize.authenticate().then(() => {
         console.log("成功连接至PostgreSQL服务器");
       });
       await sequelize
-        .sync({ logging: false, force: true })
+        .sync({ logging: false })
         .then(() => console.log("同步数据库模型成功..."));
     } catch (error) {
       console.error("未能连接至服务器:", error);
@@ -42,11 +44,9 @@ class DB {
     if (!DB.connecting) DB.Init();
   }
   async getModel<T extends keyof ModelClass>(type: T): Promise<ModelClass[T]> {
-    return await import(`./models/${type}`).then((r) => {
+    return await import(`./model/${type}`).then((r) => {
       if (r?.init instanceof Function) r.init();
       return r?.default;
     });
   }
 }
-
-export default DB;

@@ -1,7 +1,7 @@
-import Biz_Component from './component';
-import Biz_Component_Commit from './component_commit';
+import Biz_Widget from './widget';
+import Biz_Widget_Commit from './widget_commit';
 
 export {
-  Biz_Component,
-  Biz_Component_Commit,
+  Biz_Widget,
+  Biz_Widget_Commit,
 }
