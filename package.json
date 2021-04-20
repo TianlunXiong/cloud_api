@@ -1,6 +1,7 @@
 {
   "name": "xcloud_api",
   "version": "1.0.0",
+  "author": "xiongtianlun",
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsnd ./app/index.ts",
