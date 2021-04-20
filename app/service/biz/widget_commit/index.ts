@@ -41,15 +41,16 @@ class DB_Component_Commit {
     }
   }
 
-  async retrieve(params: QueryWidgetCommit, noComponentId = true) {
+  async retrieve(params: QueryWidgetCommit) {
     try {
       const Model = await this.db.getModel('widgetCommit');
-      const { name, pkg_name, widget_id } = params;
+      const { name, pkg_name, widget_id, commit_id } = params;
         const andCondition = [];
         if (widget_id) andCondition.push({ widget_id });
         if (name) andCondition.push({ name });
         if (pkg_name) andCondition.push({ pkg_name });
         if (pkg_name) andCondition.push({ pkg_name });
+        if (commit_id) andCondition.push({ commit_id });
         
         const whereCondition = andCondition.length ? {
           [Op.and]: andCondition,
@@ -57,10 +58,6 @@ class DB_Component_Commit {
 
         const rsl = await Model.findAll({
           where: whereCondition,
-          attributes: {
-            exclude: noComponentId ? ['id', 'component_id'] : ['id'],
-            include: ['update_time']
-          }
         });
         return Response.Success(rsl);
     } catch (e) {

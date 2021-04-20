@@ -2,7 +2,7 @@ import { Context } from 'koa';
 import { Controller, Get } from '@vikit/xnestjs';
 import { Biz_Widget, Biz_Widget_Commit } from '../../service/biz';
 import Utils from '../../service/utils';
-import { AddWidget, AddWidgetCommit, DeleteWidget, QueryWidget, QueryWidgetCommit } from '../../interface/api';
+import { AddWidget, AddWidgetCommit, DeleteWidget, QueryWidget, QueryWidgetCommit, ReleaseWidget } from '../../interface/api';
 
 const Response = Utils.Response;
 
@@ -57,6 +57,26 @@ class WidgetApi {
       ctx.body = Response.NotSuccess('参数错误');
     }
   }
+
+  @Get('release')
+  async release_widget(ctx: Context) {
+    const query = ctx.query as ReleaseWidget;
+    const result = this.utils.typeValidator(query, 'ReleaseWidget');
+    if (result?.valid) {
+      const { data, success, error } = await this.biz_widget_commit.retrieve({ commit_id: query.commit_id })
+      if (success && data.length > 0) {
+        await this.biz_widget.updateReleaseId(query)
+        ctx.body = Response.Success('发布成功');
+      } else if (success && data.length === 0)  {
+        ctx.body = Response.NotSuccess('没找到代码包，请重新上传');
+      } else {
+        ctx.body = Response.Error(error);
+      }
+    } else {
+      ctx.body = Response.NotSuccess('参数错误');
+    }
+  }
+
 
   @Get('commit')
   async commit(ctx: Context) {

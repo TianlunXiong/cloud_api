@@ -25,7 +25,7 @@ const generator = TJS.buildGenerator(program, settings);
 @Injectable
 export default class Utils {
   static Response = {
-    Success(data: any): ResponseBody {
+    Success<T>(data: T): ResponseBody {
       return {
         success: true,
         data,

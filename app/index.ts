@@ -1,5 +1,4 @@
 import App from '@vikit/xnestjs';
-import staticFile from './middleware/staticFile';
 import KoaBody from './middleware/koa-body';
 import cors from './middleware/cors';
 import './controller';
@@ -11,7 +10,6 @@ const app = new App();
 
 app.use(KoaBody());
 app.use(cors);
-app.use(staticFile);
 app.routes();
 app.listen(port, () => {
   app.cycleLog();

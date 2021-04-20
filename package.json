@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsnd ./app/index.ts",
-    "build:deploy": "rimraf dist && babel app --extensions .ts --out-dir dist --copy-files",
+    "build": "rimraf dist && tsc",
     "deploy": "node ./dist/index.js"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "@types/koa-send": "^4.1.2",
     "@types/superagent": "^4.1.10",
     "@types/uuid": "^8.3.0",
+    "@types/validator": "^13.1.3",
     "@vikit/xnestjs": "^0.1.0-alpha.1",
     "rimraf": "^3.0.2"
   }

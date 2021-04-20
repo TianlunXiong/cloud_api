@@ -6,6 +6,7 @@ import {
   AddWidget,
   QueryWidget,
   DeleteWidget,
+  ReleaseWidget
 } from '../../../interface/api/request/widget';
 
 const Response = Utils.Response;
@@ -73,17 +74,17 @@ class Biz_Widget {
     }
   }
 
-  async updateReleaseId(widget_id: string, releaseId: string) {
+  async updateReleaseId(params: ReleaseWidget) {
     try {
       const Model = await this.db.getModel('widget');
       try {
         const rsl = await Model.update(
           {
-            current_commit_id: releaseId,
+            current_commit_id: params.commit_id,
           },
           {
             where: {
-              widget_id,
+              name: params.name,
             },
           },
         );
