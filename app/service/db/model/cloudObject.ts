@@ -2,7 +2,7 @@ import { DataTypes, Model, Sequelize } from 'sequelize';
 import CloudObjectModel from '../../../interface/service/db/model/CloudObject';
 import { v4 as uuid } from 'uuid';
 export default class CloudObject
-  extends Model<CloudObjectModel, Pick<CloudObjectModel, 'name'>>
+  extends Model<CloudObjectModel, Pick<CloudObjectModel, 'name' | 'type'>>
   implements CloudObjectModel
 {
   static HasInited = false;

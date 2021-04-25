@@ -15,11 +15,11 @@ const Response = Utils.Response;
  * 组件 增删改查(CRUD)
  */
 @Injectable
-class Biz_Widget {
+class Biz_Cloud_Object {
   constructor(private db: DB) {}
 
   async create(params: AddCloudObject) {
-    const { name } = params;
+    const { name, type } = params;
     try {
       const Model = await this.db.getModel('cloudObject');
       const duplicated = await Model.findOne({
@@ -30,7 +30,8 @@ class Biz_Widget {
       if (!duplicated) {
         try {
           const p: AddCloudObject = {
-            name
+            name,
+            type
           };
           await Model.create(p);
         } catch (e) {
@@ -134,4 +135,4 @@ class Biz_Widget {
   }
 }
 
-export default Biz_Widget;
+export default Biz_Cloud_Object;
