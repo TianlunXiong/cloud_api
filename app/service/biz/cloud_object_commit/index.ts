@@ -3,9 +3,9 @@ import { Op } from 'sequelize';
 import DB from '../../db';
 import Utils from '../../utils';
 import {
-  AddWidgetCommit,
-  QueryWidgetCommit,
-} from '../../../interface/api/request/widget';
+  AddCloudObjectCommit,
+  QueryCloudObjectCommit,
+} from '../../../interface/api/request/cloud_object';
 
 const Response = Utils.Response;
 
@@ -16,16 +16,16 @@ const Response = Utils.Response;
 class DB_Component_Commit {
   constructor(private db: DB) {}
 
-  async create(params: AddWidgetCommit) {
+  async create(params: AddCloudObjectCommit) {
     try {
-      const Model = await this.db.getModel('widgetCommit');
+      const Model = await this.db.getModel('cloudObjectCommit');
       const {
         name,
         pkg_name,
         pkg_version,
         creator,
         src,
-        widget_id,
+        cloud_object_id,
       } = params;
       await Model.create({
         name,
@@ -33,7 +33,7 @@ class DB_Component_Commit {
         pkg_version,
         creator,
         src,
-        widget_id,
+        cloud_object_id,
       });
       return Response.Success('提交组件成功');
     } catch (e) {
@@ -41,12 +41,12 @@ class DB_Component_Commit {
     }
   }
 
-  async retrieve(params: QueryWidgetCommit) {
+  async retrieve(params: QueryCloudObjectCommit) {
     try {
-      const Model = await this.db.getModel('widgetCommit');
-      const { name, pkg_name, widget_id, commit_id } = params;
+      const Model = await this.db.getModel('cloudObjectCommit');
+      const { name, pkg_name, cloud_object_id, commit_id } = params;
         const andCondition = [];
-        if (widget_id) andCondition.push({ widget_id });
+        if (cloud_object_id) andCondition.push({ cloud_object_id });
         if (name) andCondition.push({ name });
         if (pkg_name) andCondition.push({ pkg_name });
         if (pkg_name) andCondition.push({ pkg_name });

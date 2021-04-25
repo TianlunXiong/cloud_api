@@ -1,21 +1,21 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import WidgetCommitModel from "../../../interface/service/db/model/IWidgetCommit";
+import CloudObjectCommitModel from "../../../interface/service/db/model/CloudObjectCommit";
 import { v4 as uuid } from 'uuid';
 
-class WidgetCommit
+class CloudObjectCommit
   extends Model<
-    WidgetCommitModel,
+    CloudObjectCommitModel,
     Pick<
-      WidgetCommitModel,
-      "name" | "pkg_name" | "pkg_version" | "src" | "creator" | "widget_id"
+      CloudObjectCommitModel,
+      "name" | "pkg_name" | "pkg_version" | "src" | "creator" | "cloud_object_id"
     >
   >
-  implements WidgetCommitModel {
+  implements CloudObjectCommitModel {
   static HasInited = false;
 
   id!: string;
   name!: string;
-  widget_id!: string;
+  cloud_object_id!: string;
   commit_id!: string;
   src!: string;
   pkg_name!: string;
@@ -25,8 +25,8 @@ class WidgetCommit
 }
 
 export function init(sequelize: Sequelize) {
-  if (!WidgetCommit.HasInited) {
-    WidgetCommit.init(
+  if (!CloudObjectCommit.HasInited) {
+    CloudObjectCommit.init(
       {
         id: {
           type: DataTypes.INTEGER,
@@ -38,7 +38,7 @@ export function init(sequelize: Sequelize) {
           unique: true,
           allowNull: false,
         },
-        widget_id: {
+        cloud_object_id: {
           type: DataTypes.STRING(36),
           unique: true,
           allowNull: false,
@@ -71,11 +71,11 @@ export function init(sequelize: Sequelize) {
       },
       {
         sequelize,
-        tableName: "widget_commit"
+        tableName: "cloud_object_commit"
       }
     );
-    WidgetCommit.HasInited = true;
+    CloudObjectCommit.HasInited = true;
   }
 }
 
-export default WidgetCommit;
+export default CloudObjectCommit;

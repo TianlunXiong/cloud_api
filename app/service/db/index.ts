@@ -1,5 +1,5 @@
 import { Injectable } from "@vikit/xnestjs";
-import { ModelClass, WidgetCommitModelInit, WidgetModelInit } from "./model";
+import { ModelClass, CloudObjectInit, CloudObjectCommitInit } from "./model";
 import { Sequelize } from "sequelize";
 import config from "config";
 
@@ -27,8 +27,8 @@ export default class DB {
     });
     DB.connecting = true;
     try {
-      WidgetModelInit(sequelize);
-      WidgetCommitModelInit(sequelize);
+      CloudObjectInit(sequelize);
+      CloudObjectCommitInit(sequelize);
       await sequelize.authenticate().then(() => {
         console.log("成功连接至PostgreSQL服务器");
       });

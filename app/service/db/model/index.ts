@@ -1,18 +1,18 @@
-import WidgetModel, { init as WidgetModelInit } from "./widget";
-import WidgetCommitModel, { init as WidgetCommitModelInit } from "./widgetCommit";
+import CloudObject, { init as CloudObjectInit } from "./cloudObject";
+import CloudObjectCommit, { init as CloudObjectCommitInit } from "./coudObjectCommit";
 
 export {
-  WidgetModelInit,
-  WidgetCommitModelInit,
+  CloudObjectInit,
+  CloudObjectCommitInit,
 }
 
 
 export type ModelClass = {
-  widget: typeof WidgetModel;
-  widgetCommit: typeof WidgetCommitModel;
+  cloudObject: typeof CloudObject;
+  cloudObjectCommit: typeof CloudObjectCommit;
 };
 
 export type ModelInstance = {
-  widget: WidgetModel;
-  widgetCommit: WidgetCommitModel,
+  cloudObject: CloudObject;
+  cloudObjectCommit: CloudObjectCommit,
 }

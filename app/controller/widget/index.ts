@@ -1,25 +1,25 @@
 import { Context } from 'koa';
 import { Controller, Get } from '@vikit/xnestjs';
-import { Biz_Widget, Biz_Widget_Commit } from '../../service/biz';
+import { Biz_Cloud_Object, Biz_Cloud_Object_Commit } from '../../service/biz';
 import Utils from '../../service/utils';
-import { AddWidget, AddWidgetCommit, DeleteWidget, QueryWidget, QueryWidgetCommit, ReleaseWidget } from '../../interface/api';
+import { AddCloudObject, AddCloudObjectCommit, DeleteCloudObject, QueryCloudObject, QueryCloudObjectCommit, ReleaseCloudObject } from '../../interface/api';
 
 const Response = Utils.Response;
 
-@Controller('/api/v1/widget')
+@Controller('/api/v1/cloud_object')
 class WidgetApi {
   constructor(
     private utils: Utils,
-    private biz_widget: Biz_Widget,
-    private biz_widget_commit: Biz_Widget_Commit,
+    private biz_cloud_object: Biz_Cloud_Object,
+    private biz_cloud_object_commit: Biz_Cloud_Object_Commit,
   ) {}
 
   @Get('add')
   async add(ctx: Context) {
-    const query = ctx.query as AddWidget;
-    const result = this.utils.typeValidator(query, 'AddWidget')
+    const query = ctx.query as AddCloudObject;
+    const result = this.utils.typeValidator(query, 'AddCloudObject')
     if (result?.valid) {
-      ctx.body = await this.biz_widget.create(query);
+      ctx.body = await this.biz_cloud_object.create(query);
     } else {
       ctx.body = Response.NotSuccess('参数错误');
     }
@@ -27,10 +27,10 @@ class WidgetApi {
 
   @Get('delete')
   async delete(ctx: Context) {
-    const query = ctx.query as DeleteWidget;
-    const result = this.utils.typeValidator(query, 'DeleteWidget');
+    const query = ctx.query as DeleteCloudObject;
+    const result = this.utils.typeValidator(query, 'DeleteCloudObject');
     if (result?.valid) {
-      ctx.body = await this.biz_widget.delete(query);
+      ctx.body = await this.biz_cloud_object.delete(query);
     } else {
       ctx.body = Response.NotSuccess('参数错误');
     }
@@ -38,10 +38,10 @@ class WidgetApi {
 
   @Get('query')
   async query(ctx: Context) {
-    const query = ctx.query as QueryWidget;
-    const result = this.utils.typeValidator(query, 'QueryWidget');
+    const query = ctx.query as QueryCloudObject;
+    const result = this.utils.typeValidator(query, 'QueryCloudObject');
     if (result?.valid) {
-      ctx.body = await this.biz_widget.retrieve(query);
+      ctx.body = await this.biz_cloud_object.retrieve(query);
     } else {
       ctx.body = Response.NotSuccess('参数错误');
     }
@@ -49,10 +49,10 @@ class WidgetApi {
 
   @Get('query_commit')
   async query_commit(ctx: Context) {
-    const query = ctx.query as QueryWidgetCommit;
-    const result = this.utils.typeValidator(query, 'QueryWidgetCommit');
+    const query = ctx.query as QueryCloudObjectCommit;
+    const result = this.utils.typeValidator(query, 'QueryCloudObjectCommit');
     if (result?.valid) {
-      ctx.body = await this.biz_widget_commit.retrieve(query);
+      ctx.body = await this.biz_cloud_object_commit.retrieve(query);
     } else {
       ctx.body = Response.NotSuccess('参数错误');
     }
@@ -60,12 +60,12 @@ class WidgetApi {
 
   @Get('release')
   async release_widget(ctx: Context) {
-    const query = ctx.query as ReleaseWidget;
-    const result = this.utils.typeValidator(query, 'ReleaseWidget');
+    const query = ctx.query as ReleaseCloudObject;
+    const result = this.utils.typeValidator(query, 'ReleaseCloudObject');
     if (result?.valid) {
-      const { data, success, error } = await this.biz_widget_commit.retrieve({ commit_id: query.commit_id })
+      const { data, success, error } = await this.biz_cloud_object_commit.retrieve({ commit_id: query.commit_id })
       if (success && data.length > 0) {
-        await this.biz_widget.updateReleaseId(query)
+        await this.biz_cloud_object.updateReleaseId(query)
         ctx.body = Response.Success('发布成功');
       } else if (success && data.length === 0)  {
         ctx.body = Response.NotSuccess('没找到代码包，请重新上传');
@@ -80,15 +80,15 @@ class WidgetApi {
 
   @Get('commit')
   async commit(ctx: Context) {
-    const query = ctx.query as AddWidgetCommit;
-    const result = this.utils.typeValidator(query, 'AddWidgetCommit');
+    const query = ctx.query as AddCloudObjectCommit;
+    const result = this.utils.typeValidator(query, 'AddCloudObjectCommit');
 
     if (!result?.valid) {
       ctx.body = Response.NotSuccess('参数错误');
       return;
     }
     try {
-      ctx.body = await this.biz_widget_commit.create(query);
+      ctx.body = await this.biz_cloud_object_commit.create(query);
     } catch (e) {
       ctx.body = Response.Error(e);
     }

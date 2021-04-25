@@ -1,6 +1,6 @@
-export default interface IWidgetModel {
+export default interface CloudObjectModel {
   id: string;
-  widget_id: string;
+  cloud_object_id: string;
   name: string;
   type: string;
   current_commit_id: string;

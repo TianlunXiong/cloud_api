@@ -1,3 +1,3 @@
-export * from './request/widget';
+export * from './request/cloud_object';
 export * from './request/cos';
 

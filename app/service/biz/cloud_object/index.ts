@@ -3,11 +3,11 @@ import { Op } from 'sequelize';
 import DB from '../../db';
 import Utils from '../../utils';
 import {
-  AddWidget,
-  QueryWidget,
-  DeleteWidget,
-  ReleaseWidget
-} from '../../../interface/api/request/widget';
+  AddCloudObject,
+  QueryCloudObject,
+  DeleteCloudObject,
+  ReleaseCloudObject
+} from '../../../interface/api/request/cloud_object';
 
 const Response = Utils.Response;
 
@@ -18,10 +18,10 @@ const Response = Utils.Response;
 class Biz_Widget {
   constructor(private db: DB) {}
 
-  async create(params: AddWidget) {
+  async create(params: AddCloudObject) {
     const { name } = params;
     try {
-      const Model = await this.db.getModel('widget');
+      const Model = await this.db.getModel('cloudObject');
       const duplicated = await Model.findOne({
         where: {
           name
@@ -29,7 +29,7 @@ class Biz_Widget {
       });
       if (!duplicated) {
         try {
-          const p: AddWidget = {
+          const p: AddCloudObject = {
             name
           };
           await Model.create(p);
@@ -45,13 +45,13 @@ class Biz_Widget {
     }
   }
 
-  async retrieve(params: QueryWidget = {}, findOne: boolean = false) {
+  async retrieve(params: QueryCloudObject = {}, findOne: boolean = false) {
     try {
-      const Model = await this.db.getModel('widget');
+      const Model = await this.db.getModel('cloudObject');
       try {
-        const { name, creator, widget_id } = params;
+        const { name, creator, cloud_object_id } = params;
         const andCondition: { [key: string]: any }[] = [];
-        if (widget_id) andCondition.push({ widget_id });
+        if (cloud_object_id) andCondition.push({ cloud_object_id });
         if (creator) andCondition.push({ creator });
         if (name) andCondition.push({ name });
 
@@ -74,9 +74,9 @@ class Biz_Widget {
     }
   }
 
-  async updateReleaseId(params: ReleaseWidget) {
+  async updateReleaseId(params: ReleaseCloudObject) {
     try {
-      const Model = await this.db.getModel('widget');
+      const Model = await this.db.getModel('cloudObject');
       try {
         const rsl = await Model.update(
           {
@@ -98,10 +98,10 @@ class Biz_Widget {
     }
   }
 
-  async delete(params: DeleteWidget) {
+  async delete(params: DeleteCloudObject) {
     const { name } = params;
     try {
-      const Model = await this.db.getModel('widget');
+      const Model = await this.db.getModel('cloudObject');
       let hasOne = null;
       try {
         hasOne = await Model.findOne({

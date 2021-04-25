@@ -1,14 +1,14 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
-import WidgetModel from '../../../interface/service/db/model/IWidget';
+import CloudObjectModel from '../../../interface/service/db/model/CloudObject';
 import { v4 as uuid } from 'uuid';
-export default class Widget
-  extends Model<WidgetModel, Pick<WidgetModel, 'name'>>
-  implements WidgetModel
+export default class CloudObject
+  extends Model<CloudObjectModel, Pick<CloudObjectModel, 'name'>>
+  implements CloudObjectModel
 {
   static HasInited = false;
   
   public id!: string;
-  public widget_id!: string;
+  public cloud_object_id!: string;
   public name!: string;
   public type!: string;
   public current_commit_id!: string;
@@ -18,8 +18,8 @@ export default class Widget
   public update_time!: number;
 }
 export function init(sequelize: Sequelize) {
-  if (!Widget.HasInited) {
-    Widget.init(
+  if (!CloudObject.HasInited) {
+    CloudObject.init(
       {
         id: {
           type: DataTypes.INTEGER,
@@ -30,8 +30,9 @@ export function init(sequelize: Sequelize) {
           type: DataTypes.STRING(100),
           unique: true,
           allowNull: false,
+          comment: '云组件名称'
         },
-        widget_id: {
+        cloud_object_id: {
           type: DataTypes.STRING(36),
           unique: true,
           allowNull: false,
@@ -59,9 +60,9 @@ export function init(sequelize: Sequelize) {
       },
       {
         sequelize,
-        tableName: 'widget',
+        tableName: 'cloud_object',
       },
     );
-    Widget.HasInited = true;
+    CloudObject.HasInited = true;
   }
 }

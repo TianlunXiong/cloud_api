@@ -1,7 +1,7 @@
-import Biz_Widget from './widget';
-import Biz_Widget_Commit from './widget_commit';
+import Biz_Cloud_Object from './cloud_object';
+import Biz_Cloud_Object_Commit from './cloud_object_commit';
 
 export {
-  Biz_Widget,
-  Biz_Widget_Commit,
+  Biz_Cloud_Object,
+  Biz_Cloud_Object_Commit,
 }
