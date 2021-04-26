@@ -17,7 +17,7 @@ export default {
   txcos: {
     SECRET_ID: "AKIDjX8VTCnrmzwgBQhsDSpxpVvZy94jQ6vT",
     SECRET_KEY: "pPimai4HExrXx8KPEnCXgYGhuvhDUWIn",
-    Bucket: "tainlx-1254430332",
+    Bucket: "cloud-zip-1254430332",
     Region: "ap-guangzhou",
 
     durationSeconds: 1800,
@@ -29,7 +29,7 @@ export default {
             effect: "allow",
             action: ["name/cos:GetObject"],
             resource: [
-              "qcs::cos:ap-guangzhou:uid/1254430332:tainlx-1254430332/*",
+              "qcs::cos:ap-guangzhou:uid/1254430332:cloud-zip-1254430332/*",
             ],
           },
         ],
@@ -41,7 +41,7 @@ export default {
             effect: "allow",
             action: ["name/cos:PutObject"],
             resource: [
-              "qcs::cos:ap-guangzhou:uid/1254430332:tainlx-1254430332/*",
+              "qcs::cos:ap-guangzhou:uid/1254430332:cloud-zip-1254430332/*",
             ],
           },
         ],
