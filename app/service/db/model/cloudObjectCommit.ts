@@ -7,7 +7,7 @@ class CloudObjectCommit
     CloudObjectCommitModel,
     Pick<
       CloudObjectCommitModel,
-      "name" | "pkg_name" | "pkg_version" | "src" | "creator" | "cloud_object_id"
+      "name" | "pkg_name" | "pkg_version" | "creator" | "cloud_object_id"
     >
   >
   implements CloudObjectCommitModel {
@@ -35,12 +35,10 @@ export function init(sequelize: Sequelize) {
         },
         name: {
           type: DataTypes.STRING(100),
-          unique: true,
           allowNull: false,
         },
         cloud_object_id: {
           type: DataTypes.STRING(36),
-          unique: true,
           allowNull: false,
         },
         commit_id: {
@@ -52,15 +50,14 @@ export function init(sequelize: Sequelize) {
         src: {
           type: DataTypes.TEXT,
           allowNull: false,
+          defaultValue: ''
         },
         pkg_name: {
           type: DataTypes.TEXT,
-          unique: true,
           allowNull: false,
         },
         pkg_version: {
           type: DataTypes.TEXT,
-          unique: true,
           allowNull: false,
         },
         creator: {

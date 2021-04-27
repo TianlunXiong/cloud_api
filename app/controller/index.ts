@@ -1,2 +1,2 @@
 import "./cos";
-import "./widget";
+import "./cloud_object";

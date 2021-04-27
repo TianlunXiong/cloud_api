@@ -6,7 +6,7 @@ const STS = require('qcloud-cos-sts');
 const COS_CONFIG: any = config.get('txcos');
 @Injectable
 export default class Cos {
-  async getCredential(type = "GetObject") {
+  async getCredential(type = "PutObject") {
     return await new Promise<{
       sessionToken: string;
       tmpSecretId: string;

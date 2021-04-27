@@ -2,7 +2,14 @@ import { Context } from 'koa';
 import { Controller, Get } from '@vikit/xnestjs';
 import { Biz_Cloud_Object, Biz_Cloud_Object_Commit } from '../../service/biz';
 import Utils from '../../service/utils';
-import { AddCloudObject, AddCloudObjectCommit, DeleteCloudObject, QueryCloudObject, QueryCloudObjectCommit, ReleaseCloudObject } from '../../interface/api';
+import {
+  AddCloudObject,
+  AddCloudObjectCommit,
+  DeleteCloudObject,
+  QueryCloudObject,
+  QueryCloudObjectCommit,
+  UpdateCloudObjectCommit,
+} from "../../interface/api";
 
 const Response = Utils.Response;
 
@@ -47,35 +54,24 @@ class WidgetApi {
     }
   }
 
-  @Get('query_commit')
-  async query_commit(ctx: Context) {
-    const query = ctx.query as QueryCloudObjectCommit;
-    const result = this.utils.typeValidator(query, 'QueryCloudObjectCommit');
-    if (result?.valid) {
-      ctx.body = await this.biz_cloud_object_commit.retrieve(query);
-    } else {
-      ctx.body = Response.NotSuccess('参数错误');
-    }
-  }
-
-  @Get('release')
-  async release_widget(ctx: Context) {
-    const query = ctx.query as ReleaseCloudObject;
-    const result = this.utils.typeValidator(query, 'ReleaseCloudObject');
-    if (result?.valid) {
-      const { data, success, error } = await this.biz_cloud_object_commit.retrieve({ commit_id: query.commit_id })
-      if (success && data.length > 0) {
-        await this.biz_cloud_object.updateReleaseId(query)
-        ctx.body = Response.Success('发布成功');
-      } else if (success && data.length === 0)  {
-        ctx.body = Response.NotSuccess('没找到代码包，请重新上传');
-      } else {
-        ctx.body = Response.Error(error);
-      }
-    } else {
-      ctx.body = Response.NotSuccess('参数错误');
-    }
-  }
+  // @Get('release')
+  // async release_widget(ctx: Context) {
+  //   const query = ctx.query as ReleaseCloudObject;
+  //   const result = this.utils.typeValidator(query, 'ReleaseCloudObject');
+  //   if (result?.valid) {
+  //     const { data, success, error } = await this.biz_cloud_object_commit.retrieve({ commit_id: query.commit_id })
+  //     if (success && data.length > 0) {
+  //       await this.biz_cloud_object.updateReleaseId(query)
+  //       ctx.body = Response.Success('发布成功');
+  //     } else if (success && data.length === 0)  {
+  //       ctx.body = Response.NotSuccess('没找到代码包，请重新上传');
+  //     } else {
+  //       ctx.body = Response.Error(error);
+  //     }
+  //   } else {
+  //     ctx.body = Response.NotSuccess('参数错误');
+  //   }
+  // }
 
 
   @Get('commit')
@@ -93,6 +89,29 @@ class WidgetApi {
       ctx.body = Response.Error(e);
     }
   }
+
+  @Get('query_commit')
+  async query_commit(ctx: Context) {
+    const query = ctx.query as QueryCloudObjectCommit;
+    const result = this.utils.typeValidator(query, 'QueryCloudObjectCommit');
+    if (result?.valid) {
+      ctx.body = await this.biz_cloud_object_commit.retrieve(query);
+    } else {
+      ctx.body = Response.NotSuccess('参数错误');
+    }
+  }
+
+  @Get('update_commit')
+  async update_commit(ctx: Context) {
+    const query = ctx.query as UpdateCloudObjectCommit;
+    const result = this.utils.typeValidator(query, 'UpdateCloudObjectCommit');
+    if (result?.valid) {
+      ctx.body = await this.biz_cloud_object_commit.update(query)
+    } else {
+      ctx.body = Response.NotSuccess('参数错误');
+    }
+  }
+
 }
 
 // @Controller('/cloud/component')

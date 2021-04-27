@@ -5,6 +5,7 @@ import Utils from '../../utils';
 import {
   AddCloudObjectCommit,
   QueryCloudObjectCommit,
+  UpdateCloudObjectCommit,
 } from '../../../interface/api/request/cloud_object';
 
 const Response = Utils.Response;
@@ -24,18 +25,19 @@ class DB_Component_Commit {
         pkg_name,
         pkg_version,
         creator,
-        src,
         cloud_object_id,
       } = params;
-      await Model.create({
+      const d = await Model.create({
         name,
         pkg_name,
         pkg_version,
         creator,
-        src,
         cloud_object_id,
       });
-      return Response.Success('提交组件成功');
+      return Response.Success({
+        msg: '提交成功',
+        commit_id: d.commit_id,
+      });
     } catch (e) {
       return Response.Error(e);
     }
@@ -65,7 +67,25 @@ class DB_Component_Commit {
     }
   }
 
-  async update() {}
+  async update(params: UpdateCloudObjectCommit) {
+    try {
+      const Model = await this.db.getModel('cloudObjectCommit');
+      const { commit_id, src } = params;
+      await Model.update(
+        {
+          src,
+        },
+        {
+          where: {
+            commit_id,
+          },
+        },
+      );
+      return Response.Success("更新成功");
+    } catch (e) {
+      return Response.Error(e);
+    }
+  }
 
   async delete() {}
 }

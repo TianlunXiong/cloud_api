@@ -1,5 +1,5 @@
 import CloudObject, { init as CloudObjectInit } from "./cloudObject";
-import CloudObjectCommit, { init as CloudObjectCommitInit } from "./coudObjectCommit";
+import CloudObjectCommit, { init as CloudObjectCommitInit } from "./cloudObjectCommit";
 
 export {
   CloudObjectInit,
