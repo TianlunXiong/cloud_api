@@ -7,5 +7,6 @@ COPY . /opt/xcloud_api
 RUN npm install --registry=https://registry.npm.taobao.org && npm run build
 
 EXPOSE 8080
+EXPOSE 8082
 
 CMD npm run deploy

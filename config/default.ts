@@ -7,10 +7,10 @@ export default {
   ws_port: 8082,
   apiType: join(PWD, './app/interface/api/index.ts'),
   db: {
-    database: "test_1",
-    username: "tainlx",
+    database: "cloud_test",
+    username: "postgres",
     password: "1313567",
-    host: "128.1.32.105",
+    host: "192.168.1.11",
     port: 55433,
     dialect: "postgres",
     logging: false,
