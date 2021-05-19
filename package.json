@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsnd ./app/index.ts",
     "build": "rimraf dist && tsc",
-    "deploy": "node ./dist/index.js"
+    "deploy": "pm2 start ./dist/index.js"
   },
   "dependencies": {
     "config": "^3.3.3",
@@ -17,6 +17,7 @@
     "koa-send": "^5.0.1",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
+    "pm2": "^4.5.6",
     "qcloud-cos-sts": "^3.0.3",
     "sequelize": "^6.6.2",
     "typescript-json-schema": "^0.50.0",
