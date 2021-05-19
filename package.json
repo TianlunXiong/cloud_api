@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsnd ./app/index.ts",
     "build": "rimraf dist && tsc",
-    "deploy": "pm2 start ./dist/index.js"
+    "deploy": "node ./dist/index.js"
   },
   "dependencies": {
     "config": "^3.3.3",
