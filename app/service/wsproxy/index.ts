@@ -37,7 +37,7 @@ export default class WSP {
 
       wss.on("connection", (ws, req) => {
         if (req.url) {
-          const query = new URL(`${req.headers.host}${req.url}`).searchParams;
+          const query = new URL(`http://${req.headers.host}${req.url}`).searchParams;
           const user = query.get('user');
           if (user) {
             ws_conn[user] = ws;
