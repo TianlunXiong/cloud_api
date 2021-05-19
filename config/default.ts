@@ -4,6 +4,7 @@ const PWD = process.cwd();
 
 export default {
   port: 8080,
+  ws_port: 8082,
   apiType: join(PWD, './app/interface/api/index.ts'),
   db: {
     database: "test_1",

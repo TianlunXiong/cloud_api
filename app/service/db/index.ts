@@ -41,7 +41,7 @@ export default class DB {
     DB.connecting = false;
   }
   constructor() {
-    if (!DB.connecting) DB.Init();
+    // if (!DB.connecting) DB.Init();
   }
   async getModel<T extends keyof ModelClass>(type: T): Promise<ModelClass[T]> {
     return await import(`./model/${type}`).then((r) => {

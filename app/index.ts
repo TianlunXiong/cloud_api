@@ -1,12 +1,11 @@
 import App from '@vikit/xnestjs';
 import KoaBody from './middleware/koa-body';
 import cors from './middleware/cors';
+export const app = new App();
 import './controller';
 
 const config = require('config');
 const port = config.get('port');
-
-const app = new App();
 
 app.use(KoaBody());
 app.use(cors);
